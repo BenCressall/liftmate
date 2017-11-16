@@ -1,0 +1,55 @@
+#workOuts{    
+    position:absolute;
+    top: 16%;
+    left: 12.5%;
+    width: 75%;
+    height: 25%;
+    font-size: 200%
+}
+
+
+#progress{    
+    position:absolute;
+    top: 58%;
+    left: 12.5%;
+    width: 75%;
+    height: 25%;
+    font-size: 200%;
+}
+
+
+#chest{
+   position:absolute;
+    top: 16%;
+    left: 12.5%;
+    width: 35%;
+    height: 25%;
+     
+}
+
+#back{
+   position:absolute;
+    top: 58%;
+    left: 52.5%;
+    width: 35%;
+    height: 25%;
+     
+}
+
+#legs{
+   position:absolute;
+    top: 58%;
+    left: 12.5%;
+    width: 35%;
+    height: 25%;
+     
+}
+
+#shoulders{
+   position:absolute;
+    top: 16%;
+    left: 52.5%;
+    width: 35%;
+    height: 25%;
+    
+}
