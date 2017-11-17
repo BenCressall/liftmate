@@ -77,16 +77,16 @@ function displayExercise(index){
     
     var tableRow = document.createElement('tr')
     
-    var tableData = document.createElement('td');
+    var tableData = document.createElement('th');
     tableData.innerHTML = "Set";
     tableRow.appendChild(tableData);
     
-    tableData = document.createElement('td');
+    tableData = document.createElement('th');
     tableData.innerHTML = "Weight";
     tableRow.appendChild(tableData);
     
-    tableData = document.createElement('td');
-    tableData.innerHTML = "Rep";
+    tableData = document.createElement('th');
+    tableData.innerHTML = "Reps";
     tableRow.appendChild(tableData);
     
     valueTable.appendChild(tableRow);
@@ -132,6 +132,9 @@ function displayExercise(index){
                    inputbox.setAttribute("id",i+":2:"+j);
                    tableData.appendChild(inputbox);
                    
+                   var br = document.createElement("br")
+                   tableData.appendChild(br);
+                   
                }
            
            tableRow.appendChild(tableData);
@@ -141,10 +144,13 @@ function displayExercise(index){
            
            for (j=1;j<=boxes;j++)
                {
-                   var inputbox = document.createElement("input");
+                   inputbox = document.createElement("input");
                    inputbox.setAttribute("type","text");
                    inputbox.setAttribute("id",i+":3:"+j);
                    tableData.appendChild(inputbox);
+                   
+                   br = document.createElement("br")
+                   tableData.appendChild(br);
                    
                }
             
