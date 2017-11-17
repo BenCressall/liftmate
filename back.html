@@ -17,32 +17,41 @@
     <body>
         <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
           <header class="mdl-layout__header">
-            <button onclick="location.href = 'index.html';" class="mdl-layout-icon mdl-button mdl-js-button mdl-button--icon">
+            <button onclick="location.href = 'workouts.html';" class="mdl-layout-icon mdl-button mdl-js-button mdl-button--icon">
               <i class="material-icons">arrow_back</i>
             </button>
             <div class="mdl-layout__header-row">
-              <span class="mdl-layout-title" id="headerBarTitle">Workouts</span>
+              <span class="mdl-layout-title" id="headerBarTitle">Back / Biceps</span>
               <div class="mdl-layout-spacer"></div>
             </div>
           </header>              
           <main class="mdl-layout__content">
-            <button onclick="location.href = 'chest.html';" id="chest" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-               Chest<br>Triceps
-            </button>
-            <button onclick="location.href = 'back.html';" id="back" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-                Back<br>Biceps
-            </button>
-            <button onclick="location.href = 'progress.html.html';" id="legs" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-                Legs<br>Abs
-            </button>
-            <button onclick="location.href = 'progress.html.html';" id="shoulders" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-                Shoulders<br>Abs
-            </button>
-            </main>
+            
+          </main>
         </div>
 
         <!--   JavaScript files:   -->
         <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-        <script src=""></script>
+        <script src="shared.js"></script>
+        
+        <script>
+        
+        var mainNode = document.getElementsByTagName("main")[0];    
+                
+        var workoutIndex = 1, 
+            exerciseIndex = 0,
+            numOfExercises = 7;
+            
+        if(exerciseIndex === 0)
+            {
+                tempNode = document.createElement("p");
+                tempNode.setAttribute("id", "info");
+                tempNode.setAttribute("style", "margin: 2em; color: green");    
+                tempNode.textContent = "This is a workout for back and biceps";
+                mainNode.appendChild(tempNode);        
+            }
+            
+            
+        </script>
     </body>
 </html>
