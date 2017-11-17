@@ -71,12 +71,29 @@ function displayExercise(index){
     repRange.textContent = "Rep Range: "  + workout[index].reps;
     mainNode.appendChild(repRange);
     
-    // make table based on given exercise
+    // make table based and assign heading rot 
     var valueTable = document.createElement('table');
     valueTable.setAttribute("id", "valueTable");
     
+    var tableRow = document.createElement('tr')
+    
+    var tableData = document.createElement('td');
+    tableData.innerHTML = "Set";
+    tableRow.appendChild(tableData);
+    
+    tableData = document.createElement('td');
+    tableData.innerHTML = "Weight";
+    tableRow.appendChild(tableData);
+    
+    tableData = document.createElement('td');
+    tableData.innerHTML = "Rep";
+    tableRow.appendChild(tableData);
+    
+    valueTable.appendChild(tableRow);
+    
+    
     // make rows and coloumns by first finding number of sets
-    sets = setCounter(workout[exerciseIndex]);
+    sets = setCounter(workout[index]);
     console.log(sets);
     
     // function can be used to find the number of elements in an object
@@ -93,12 +110,103 @@ function displayExercise(index){
     };
     
     
+    for(i=1; i<=sets; i++)
+        {
+           tableRow = document.createElement('tr') 
+            
+           tableData = document.createElement('td');
+           tableData.innerHTML = i;
+           tableRow.appendChild(tableData);
+            
+           tableData = document.createElement('td');
+            
+           //find number of input boxes needed
+           boxes = workout[index][i].length;
+           boxes = (boxes - 1)/2;
+            
+           // create the number of input boxes required and assign them an id for later reference
+           for (j=1;j<=boxes;j++)
+               {
+                   var inputbox = document.createElement("input");
+                   inputbox.setAttribute("type","text");
+                   inputbox.setAttribute("id",i+":2:"+j);
+                   tableData.appendChild(inputbox);
+                   
+               }
+           
+           tableRow.appendChild(tableData);
+        
+            
+           tableData = document.createElement('td');
+           
+           for (j=1;j<=boxes;j++)
+               {
+                   var inputbox = document.createElement("input");
+                   inputbox.setAttribute("type","text");
+                   inputbox.setAttribute("id",i+":3:"+j);
+                   tableData.appendChild(inputbox);
+                   
+               }
+            
+           tableRow.appendChild(tableData);
+
+           valueTable.appendChild(tableRow);
+                     
+        }  
     
+    mainNode.appendChild(valueTable);
     
+    var nextButton = document.createElement('button');
+        nextButton.setAttribute("id", "nextButton");
+        nextButton.innerHTML = "Next";
+        nextButton.onclick = next;
+            
+        mainNode.appendChild(nextButton);
     
-    
+    if( index > 1 )
+        {
+            var prevButton = document.createElement('button');
+            prevButton.setAttribute("id", "prevButton");
+            prevButton.innerHTML = "Previous";
+            prevButton.onclick = prev;
+            
+            mainNode.appendChild(prevButton);   
+        }
     
     
 };
+
+function next(){
+    
+    mainNode.removeChild(exerciseName);
+    mainNode.removeChild(restTime);
+    mainNode.removeChild(repRange);
+    mainNode.removeChild(valueTable);
+    mainNode.removeChild(nextButton);
+    if (exerciseIndex > 1)
+        {
+            mainNode.removeChild(prevButton);
+        }
+        
+    exerciseIndex += 1;
+    displayExercise(exerciseIndex);    
+};
+
+function prev(){
+    
+    mainNode.removeChild(exerciseName);
+    mainNode.removeChild(restTime);
+    mainNode.removeChild(repRange);
+    mainNode.removeChild(valueTable);
+    mainNode.removeChild(nextButton);
+    mainNode.removeChild(prevButton);
+    
+    exerciseIndex -= 1;
+    displayExercise(exerciseIndex);    
+};
+
+
+
+
 
 
