@@ -131,7 +131,7 @@ function displayExercise(index){
                    inputbox.setAttribute("type","text");
                    inputbox.setAttribute("id",i+":2:"+j);
                    inputbox.setAttribute("size","10");
-                   inputbox.setAttribute("pattern","[0-9]*");
+                   //inputbox.setAttribute("pattern","[0-9]*");
                    
                    tableData.appendChild(inputbox);
                    
@@ -151,7 +151,7 @@ function displayExercise(index){
                    inputbox.setAttribute("type","text");
                    inputbox.setAttribute("id",i+":3:"+j);
                    inputbox.setAttribute("size","10");
-                   inputbox.setAttribute("pattern","[0-9]*");
+                   //inputbox.setAttribute("pattern","[0-9]*");
                    
                    tableData.appendChild(inputbox);
                    
@@ -216,6 +216,36 @@ function prev(){
     exerciseIndex -= 1;
     displayExercise(exerciseIndex);    
 };
+
+function importdata (sets){
+    
+    for(i=1; i<=sets; i++)
+        {
+            //calc num of input boxes
+            var boxes = workout[exerciseIndex][i].length;
+            boxes = (boxes - 1)/2;
+            
+            for (j=1; j<=boxes; j++)
+                {
+                    
+                }
+            
+            
+            
+        }
+
+    
+    
+};
+
+
+
+
+
+
+
+
+
 
 
 
