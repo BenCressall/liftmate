@@ -130,6 +130,9 @@ function displayExercise(index){
                    var inputbox = document.createElement("input");
                    inputbox.setAttribute("type","text");
                    inputbox.setAttribute("id",i+":2:"+j);
+                   inputbox.setAttribute("size","10");
+                   inputbox.setAttribute("pattern","[0-9]*");
+                   
                    tableData.appendChild(inputbox);
                    
                    var br = document.createElement("br")
@@ -147,6 +150,9 @@ function displayExercise(index){
                    inputbox = document.createElement("input");
                    inputbox.setAttribute("type","text");
                    inputbox.setAttribute("id",i+":3:"+j);
+                   inputbox.setAttribute("size","10");
+                   inputbox.setAttribute("pattern","[0-9]*");
+                   
                    tableData.appendChild(inputbox);
                    
                    br = document.createElement("br")
