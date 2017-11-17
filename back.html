@@ -32,26 +32,79 @@
 
         <!--   JavaScript files:   -->
         <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-        <script src="shared.js"></script>
         
-        <script>
         
-        var mainNode = document.getElementsByTagName("main")[0];    
+        <script>    
                 
         var workoutIndex = 1, 
             exerciseIndex = 0,
-            numOfExercises = 7;
+            numOfExercises = 7,
+            infomessage = 'This workout for Back and Biceps includes the following exercises:'
             
-        if(exerciseIndex === 0)
-            {
-                tempNode = document.createElement("p");
-                tempNode.setAttribute("id", "info");
-                tempNode.setAttribute("style", "margin: 2em; color: green");    
-                tempNode.textContent = "This is a workout for back and biceps";
-                mainNode.appendChild(tempNode);        
-            }
+        var workout = {
             
+            workoutName: "ChestAndTris",
             
+            exercisesNum: 7,
+            
+            "1": { name: ["Legs barns"], 
+                         set1: ["Warm Up","n",0,0],
+                         set2: ["Working Set 1","n",0,0],
+                         set3: ["Working Set 2","n",0,0],
+                         set4: ["Working Set 3","ds",0,0,0,0],
+                         rest: ["60"]
+                       }, 
+            
+            "2": {       name: ["test"],
+                         set1: ["Working Set 1","n",0,0],
+                         set2: ["Working Set 2","n",0,0],
+                         set3: ["Working Set 3","ds",0,0,0,0],
+                         rest: ["60"]
+                       }, 
+            
+            "3": { name: ["Flat Bench Press"],
+                         set1: ["Working Set 1","n",0,0],
+                         set2: ["Working Set 2","n",0,0],
+                         set3: ["Working Set 3","n",0,0],
+                         set4: ["Working Set 4","n",0,0],
+                         rest: ["90"]
+                       },
+            
+            "4": { name: ["Dips "," Push Ups"],
+                         set1: ["Working Set 1","ss",0,0,0,0],
+                         set2: ["Working Set 2","ss",0,0,0,0],
+                         set3: ["Working Set 3","ss",0,0,0,0],
+                         rest: ["30"]
+                       },
+            
+            "5": { name: ["BB Skull Crushers "," Close Grip Bench"],
+                         set1: ["warm Up","ss",0,0,0,0],
+                         set2: ["Working Set 1","ss",0,0,0,0],
+                         set3: ["Working Set 2","ss",0,0,0,0],
+                         set4: ["Working Set 3","ss",0,0,0,0],
+                         rest: ["60"]
+                       },
+            
+            "6": { name: ["Rope Extensions"],
+                         set1: ["Working Set 1",0,0],
+                         set2: ["Working Set 2",0,0],
+                         set3: ["Working Set 3",0,0],
+                         rest: ["30"]
+                       },
+            
+            "7": { name: ["DB Overhead Extensions"],
+                         set1: ["Working Set 1",0,0,0,0,0,0,0,0],
+                         rest: ["Nil"]
+                       }     
+            
+        };
+        
+        
+        // may not need set codes cause we could if length(name) == 2 then classifiy as a superset and if lenght(setx) > 3, then say dropset
+           
         </script>
+        
+        <script src="shared.js"></script>
+        
     </body>
 </html>
