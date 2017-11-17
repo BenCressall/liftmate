@@ -1,5 +1,8 @@
 
 
+// Global Varibales
+var idValues = {};
+
 var mainNode = document.getElementsByTagName("main")[0];
 
 if (exerciseIndex === 0)
@@ -71,6 +74,25 @@ function displayExercise(index){
     repRange.textContent = "Rep Range: "  + workout[index].reps;
     mainNode.appendChild(repRange);
     
+    
+    // make next and previous buttons
+    var nextButton = document.createElement('button');
+        nextButton.setAttribute("id", "nextButton");
+        nextButton.innerHTML = "Next";
+        nextButton.onclick = next;
+            
+        mainNode.appendChild(nextButton);
+    
+    if( index > 1 )
+        {
+            var prevButton = document.createElement('button');
+            prevButton.setAttribute("id", "prevButton");
+            prevButton.innerHTML = "Previous";
+            prevButton.onclick = prev;
+            
+            mainNode.appendChild(prevButton);   
+        }
+    
     // make table based and assign heading rot 
     var valueTable = document.createElement('table');
     valueTable.setAttribute("id", "valueTable");
@@ -94,7 +116,6 @@ function displayExercise(index){
     
     // make rows and coloumns by first finding number of sets
     sets = setCounter(workout[index]);
-    console.log(sets);
     
     // function can be used to find the number of elements in an object
     function setCounter(obj){
@@ -110,8 +131,14 @@ function displayExercise(index){
     };
     
     
+    // build the table for the required number of sets and account for supersets and drop sets
     for(i=1; i<=sets; i++)
         {
+            
+           // variable used to cycle throught the weights of a set if there is more than one
+           var weightCounter = 1;
+           var repCounter = 2; 
+            
            tableRow = document.createElement('tr') 
             
            tableData = document.createElement('td');
@@ -120,23 +147,56 @@ function displayExercise(index){
             
            tableData = document.createElement('td');
             
-           //find number of input boxes needed
+           //find number of input boxes needed to account for drop sets or supersets
            boxes = workout[index][i].length;
            boxes = (boxes - 1)/2;
             
            // create the number of input boxes required and assign them an id for later reference
            for (j=1;j<=boxes;j++)
                {
+                     
+                   // assign id value to previous weight in global varibale (to help make on blur work)
+                   var id = i +":2:"+j;
+                   idValues[id] = workout[index][i][weightCounter];
+                   
                    var inputbox = document.createElement("input");
                    inputbox.setAttribute("type","text");
                    inputbox.setAttribute("id",i+":2:"+j);
                    inputbox.setAttribute("size","10");
                    //inputbox.setAttribute("pattern","[0-9]*");
                    
+                   // set value from previous workout 
+                   inputbox.value = workout[index][i][weightCounter];
+                   inputbox.style.color = "#CCC";
+
+
+                    // Apply onfocus logic
+                    inputbox.onfocus = function() {
+                        
+                        // If the current value is our default value
+                        if (this.value !== "")  {
+                        // clear it and set the text color to black
+                        this.value = "";
+                        this.style.color = "#000";
+                        }
+                    }
+                    
+                    inputbox.onblur = function() {
+                        // If the current value is empty
+                        if (this.value == "") {
+                        // set it to our default value and lighten the color
+                        id = this.id;
+                        this.value = idValues[id] ;
+                        this.style.color = "#CCC";
+                      }
+                    }
+
                    tableData.appendChild(inputbox);
                    
                    var br = document.createElement("br")
                    tableData.appendChild(br);
+                   
+                   weightCounter += 2;          
                    
                }
            
@@ -146,17 +206,50 @@ function displayExercise(index){
            tableData = document.createElement('td');
            
            for (j=1;j<=boxes;j++)
-               {
+               {    
+                   var id = i +":3:"+j;
+                   idValues[id] = workout[index][i][repCounter];
+                   
                    inputbox = document.createElement("input");
                    inputbox.setAttribute("type","text");
                    inputbox.setAttribute("id",i+":3:"+j);
                    inputbox.setAttribute("size","10");
                    //inputbox.setAttribute("pattern","[0-9]*");
                    
+                   // set value from previous workout
+                   inputbox.value = workout[index][i][repCounter];
+                   inputbox.style.color = "#CCC";
+
+
+                    // Apply onfocus logic
+                    inputbox.onfocus = function() {
+                        
+                        // If the current value is our default value
+                        if (this.value !== "")  {
+                        // clear it and set the text color to black
+                        this.value = "";
+                        this.style.color = "#000";
+                        }
+                    }
+                    
+                    // Apply onblur logic where the global id object is referenced 
+                    // to re-enstate the previous workouts value 
+                    inputbox.onblur = function() {
+                        // If the current value is empty
+                        if (this.value == "") {
+                        // set it to our default value and lighten the color
+                        id = this.id;
+                        this.value = idValues[id] ;
+                        this.style.color = "#CCC";
+                        }
+                    }
+                                  
                    tableData.appendChild(inputbox);
                    
                    br = document.createElement("br")
                    tableData.appendChild(br);
+                   
+                   repCounter += 2;
                    
                }
             
@@ -167,23 +260,6 @@ function displayExercise(index){
         }  
     
     mainNode.appendChild(valueTable);
-    
-    var nextButton = document.createElement('button');
-        nextButton.setAttribute("id", "nextButton");
-        nextButton.innerHTML = "Next";
-        nextButton.onclick = next;
-            
-        mainNode.appendChild(nextButton);
-    
-    if( index > 1 )
-        {
-            var prevButton = document.createElement('button');
-            prevButton.setAttribute("id", "prevButton");
-            prevButton.innerHTML = "Previous";
-            prevButton.onclick = prev;
-            
-            mainNode.appendChild(prevButton);   
-        }
     
     
 };
