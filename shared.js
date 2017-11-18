@@ -1,7 +1,11 @@
 
 
 // Global Varibales
-var idValues = {};
+
+console.log(workout);
+
+var prevIdValues = {},
+    currentIdValue = {};
 
 var mainNode = document.getElementsByTagName("main")[0];
 
@@ -41,6 +45,9 @@ if (exerciseIndex === 0)
             
         }
 
+
+/////// Functions ////////
+
 function begin(){
     
     exerciseIndex += 1;
@@ -53,8 +60,10 @@ function begin(){
 };
 
 function displayExercise(index){
-  
-    // will need to remove all previous elements this may be a little difficult given the variable number of tables, but create a gloabal variable that tracks this and you should be all good
+    
+    // set these back to an empty object for each exercise so that we dont get an overide effect (not that it would matter)
+    prevIdValues = {}
+    currentIdValue = {};
     
     // exercise name
     var exerciseName = document.createElement('p');
@@ -157,7 +166,7 @@ function displayExercise(index){
                      
                    // assign id value to previous weight in global varibale (to help make on blur work)
                    var id = i +":2:"+j;
-                   idValues[id] = workout[index][i][weightCounter];
+                   prevIdValues[id] = workout[index][i][weightCounter];
                    
                    var inputbox = document.createElement("input");
                    inputbox.setAttribute("type","text");
@@ -183,12 +192,19 @@ function displayExercise(index){
                     
                     inputbox.onblur = function() {
                         // If the current value is empty
-                        if (this.value == "") {
-                        // set it to our default value and lighten the color
                         id = this.id;
-                        this.value = idValues[id] ;
-                        this.style.color = "#CCC";
-                      }
+                        if (this.value == "") 
+                        {
+                            // set it to our default value and lighten the color
+                            this.value = prevIdValues[id] ;
+                            this.style.color = "#CCC";
+                        }
+                        // if value has been entered then put this value into global object 'currentIdValues'
+                        else
+                        {
+                            currentIdValue[id] = this.value;
+                            console.log(currentIdValue);
+                        }
                     }
 
                    tableData.appendChild(inputbox);
@@ -208,7 +224,7 @@ function displayExercise(index){
            for (j=1;j<=boxes;j++)
                {    
                    var id = i +":3:"+j;
-                   idValues[id] = workout[index][i][repCounter];
+                   prevIdValues[id] = workout[index][i][repCounter];
                    
                    inputbox = document.createElement("input");
                    inputbox.setAttribute("type","text");
@@ -236,11 +252,18 @@ function displayExercise(index){
                     // to re-enstate the previous workouts value 
                     inputbox.onblur = function() {
                         // If the current value is empty
-                        if (this.value == "") {
-                        // set it to our default value and lighten the color
                         id = this.id;
-                        this.value = idValues[id] ;
-                        this.style.color = "#CCC";
+                        if (this.value == "") 
+                        {
+                            // set it to our default value and lighten the color
+                            this.value = prevIdValues[id] ;
+                            this.style.color = "#CCC";
+                        }
+                        // if value has been entered then put this value into global object 'currentIdValues'
+                        else
+                        {
+                            currentIdValue[id] = this.value;
+                            console.log(currentIdValue);
                         }
                     }
                                   
@@ -265,6 +288,9 @@ function displayExercise(index){
 };
 
 function next(){
+    
+    exportdata(exerciseIndex);
+    console.log(workout);
     
     mainNode.removeChild(exerciseName);
     mainNode.removeChild(restTime);
@@ -293,24 +319,47 @@ function prev(){
     displayExercise(exerciseIndex);    
 };
 
-function importdata (sets){
+function exportdata(index)
+{
     
-    for(i=1; i<=sets; i++)
+    //determine the number of sets in exercise ////// remember that this -3 elements off and may change depedning on structure
+    sets = setCounter(workout[index]);
+    
+    // function can be used to find the number of elements in an object
+    function setCounter(obj){
+        
+        var count = 0;
+        for(var i in obj)
+            if(obj.hasOwnProperty(i)){
+                count++;
+            }
+
+        // -3 to just get the number of sets
+        return count - 3;
+    };
+    
+    for(i=1;i=sets;i++)
         {
-            //calc num of input boxes
-            var boxes = workout[exerciseIndex][i].length;
-            boxes = (boxes - 1)/2;
-            
-            for (j=1; j<=boxes; j++)
+            entries = workout[index][i].length;
+            entries = (entries - 1)/2; 
+        
+            for (j=1; j<= entries; j++)
                 {
+                    var weightCounter = 1;
+                    var repCounter = 2;
                     
-                }
-            
-            
+                    id = i + ":2:" + j;
+                    workout[index][i][weightCounter] = currentIdValue[id];
+                    
+                    id = i + ":3:" + j;
+                    workout[index][i][repCounter] = currentIdValue[id];
+                    
+                    weightCounter += 2;
+                    repCounter += 2;
+                    
+                };    
             
         }
-
-    
     
 };
 
