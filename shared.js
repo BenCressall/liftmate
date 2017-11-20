@@ -5,7 +5,14 @@
 console.log(workout);
 
 var prevIdValues = {},
-    currentIdValue = {};
+    currentIdValue = {},
+    
+    // page vists acts as a button to determine if exercise has previosuly been view, 1 = page has been view. If page has been view then the input values should be displayed in black, not light grey.
+    pageVisits = [];
+
+
+
+
 
 var mainNode = document.getElementsByTagName("main")[0];
 
@@ -108,6 +115,7 @@ function displayExercise(index){
     
     var tableRow = document.createElement('tr')
     
+    // table headings
     var tableData = document.createElement('th');
     tableData.innerHTML = "Set";
     tableRow.appendChild(tableData);
@@ -121,6 +129,7 @@ function displayExercise(index){
     tableRow.appendChild(tableData);
     
     valueTable.appendChild(tableRow);
+    
     
     
     // make rows and coloumns by first finding number of sets
@@ -150,6 +159,7 @@ function displayExercise(index){
             
            tableRow = document.createElement('tr') 
             
+           // build set number row (1st row)
            tableData = document.createElement('td');
            tableData.innerHTML = i;
            tableRow.appendChild(tableData);
@@ -161,22 +171,39 @@ function displayExercise(index){
            boxes = (boxes - 1)/2;
             
            // create the number of input boxes required and assign them an id for later reference
+           // build weigth row (2nd column)   
            for (j=1;j<=boxes;j++)
                {
-                     
-                   // assign id value to previous weight in global varibale (to help make on blur work)
+                   
+                   // assign id value to previous weight in global object varibale (to help make on blur work)
                    var id = i +":2:"+j;
                    prevIdValues[id] = workout[index][i][weightCounter];
+
+                   // set current value id same as previous value so that if user does not change weight/reps will not have to re-enter
+                   currentIdValue[id] = prevIdValues[id];
                    
+                   
+                   // build input boxes to enter data
                    var inputbox = document.createElement("input");
                    inputbox.setAttribute("type","text");
                    inputbox.setAttribute("id",i+":2:"+j);
                    inputbox.setAttribute("size","10");
                    //inputbox.setAttribute("pattern","[0-9]*");
                    
-                   // set value from previous workout 
-                   inputbox.value = workout[index][i][weightCounter];
-                   inputbox.style.color = "#CCC";
+                   
+                   // set value of input boxes from previous workout 
+                   //inputbox.value = workout[index][i][weightCounter];
+                   inputbox.value = prevIdValues[id];
+                   // set value of page colour depending on wether page has previously been visited                    
+                   if (pageVisits[index] !== 1)
+                       {
+                            inputbox.style.color = "#CCC";  
+                       }
+                   else
+                       {
+                           inputbox.style.color = "#000"; 
+                       }
+                   
 
 
                     // Apply onfocus logic
@@ -190,6 +217,8 @@ function displayExercise(index){
                         }
                     }
                     
+                    // Apply onblur logic where the global id object is referenced 
+                    // to re-enstate the previous workouts value when block is left black
                     inputbox.onblur = function() {
                         // If the current value is empty
                         id = this.id;
@@ -198,6 +227,7 @@ function displayExercise(index){
                             // set it to our default value and lighten the color
                             this.value = prevIdValues[id] ;
                             this.style.color = "#CCC";
+                            
                         }
                         // if value has been entered then put this value into global object 'currentIdValues'
                         else
@@ -220,11 +250,16 @@ function displayExercise(index){
         
             
            tableData = document.createElement('td');
-           
+            
+            
+           // Build reps row (3rd column)
            for (j=1;j<=boxes;j++)
                {    
                    var id = i +":3:"+j;
                    prevIdValues[id] = workout[index][i][repCounter];
+                   
+                   // set current value id same as previous value so that if user does not change weight/reps will not have to re-enter
+                   currentIdValue[id] = prevIdValues[id];
                    
                    inputbox = document.createElement("input");
                    inputbox.setAttribute("type","text");
@@ -233,9 +268,16 @@ function displayExercise(index){
                    //inputbox.setAttribute("pattern","[0-9]*");
                    
                    // set value from previous workout
-                   inputbox.value = workout[index][i][repCounter];
-                   inputbox.style.color = "#CCC";
-
+                   inputbox.value = prevIdValues[id]
+                   // set value of page colour depending on wether page has previously been visited
+                   if (pageVisits[exerciseIndex] !== 1)
+                       {
+                            inputbox.style.color = "#CCC";  
+                       }
+                   else
+                       {
+                           inputbox.style.color = "#000"; 
+                       }
 
                     // Apply onfocus logic
                     inputbox.onfocus = function() {
@@ -249,15 +291,16 @@ function displayExercise(index){
                     }
                     
                     // Apply onblur logic where the global id object is referenced 
-                    // to re-enstate the previous workouts value 
+                    // to re-enstate the previous workouts value when block is left black
                     inputbox.onblur = function() {
                         // If the current value is empty
                         id = this.id;
                         if (this.value == "") 
                         {
                             // set it to our default value and lighten the color
-                            this.value = prevIdValues[id] ;
+                            this.value = prevIdValues[id];
                             this.style.color = "#CCC";
+        
                         }
                         // if value has been entered then put this value into global object 'currentIdValues'
                         else
@@ -290,7 +333,6 @@ function displayExercise(index){
 function next(){
     
     exportdata(exerciseIndex);
-    console.log(workout);
     
     mainNode.removeChild(exerciseName);
     mainNode.removeChild(restTime);
@@ -301,12 +343,17 @@ function next(){
         {
             mainNode.removeChild(prevButton);
         }
-        
+    
+    pageVisits[exerciseIndex] = 1;  
     exerciseIndex += 1;
-    displayExercise(exerciseIndex);    
+    displayExercise(exerciseIndex);
+    console.log(pageVisits);
+    
 };
 
 function prev(){
+    
+    exportdata(exerciseIndex);
     
     mainNode.removeChild(exerciseName);
     mainNode.removeChild(restTime);
@@ -315,8 +362,10 @@ function prev(){
     mainNode.removeChild(nextButton);
     mainNode.removeChild(prevButton);
     
+    pageVisits[exerciseIndex] = 1;
     exerciseIndex -= 1;
-    displayExercise(exerciseIndex);    
+    displayExercise(exerciseIndex);
+    
 };
 
 function exportdata(index)
@@ -338,21 +387,23 @@ function exportdata(index)
         return count - 3;
     };
     
-    for(i=1;i=sets;i++)
+    for(i=1;i<=sets;i++)
         {
             entries = workout[index][i].length;
             entries = (entries - 1)/2; 
+            
+            var weightCounter = 1;
+            var repCounter = 2;
         
-            for (j=1; j<= entries; j++)
+            for (j=1; j <= entries; j++)
                 {
-                    var weightCounter = 1;
-                    var repCounter = 2;
+                    
                     
                     id = i + ":2:" + j;
-                    workout[index][i][weightCounter] = currentIdValue[id];
+                    workout[index][i][weightCounter] = Number(currentIdValue[id]);
                     
                     id = i + ":3:" + j;
-                    workout[index][i][repCounter] = currentIdValue[id];
+                    workout[index][i][repCounter] = Number(currentIdValue[id]);
                     
                     weightCounter += 2;
                     repCounter += 2;
