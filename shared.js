@@ -108,19 +108,19 @@ function displayExercise(index){
     currentIdValue = {};
     
     // exercise name
-    var exerciseName = document.createElement('p');
+    var exerciseName = document.createElement('div');
     exerciseName.setAttribute("id","exerciseName");
     exerciseName.textContent = workout[index].name;
     mainNode.appendChild(exerciseName);
     
     // recommended rest time
-    var restTime = document.createElement('p');
+    var restTime = document.createElement('div');
     restTime.setAttribute("id","restTime");
     restTime.textContent = "Rest Time: "  + workout[index].rest + "s";
     mainNode.appendChild(restTime);
     
     // recommended rep range
-    var repRange = document.createElement('p');
+    var repRange = document.createElement('div');
     repRange.setAttribute("id","repRange");
     repRange.textContent = "Rep Range: "  + workout[index].reps;
     mainNode.appendChild(repRange);
@@ -521,10 +521,14 @@ function endWorkout()
     allWorkoutsAsJSON = JSON.stringify(allWorkouts)
         
     localStorage.setItem("Workout_ALL",allWorkoutsAsJSON);
+     
+        
+    // go back to workout page    
+    location.href = "workouts.html";
          
     }    
     
-    location.href = "workouts.html";
+    
         
     
 };

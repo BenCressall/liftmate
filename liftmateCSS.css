@@ -2,6 +2,8 @@
 table {
     border-collapse: collapse;
     width: 100%;
+    position: absolute;
+    top: 20%
 }
 
 table, td,th {
@@ -76,13 +78,74 @@ tr:nth-child(even) {background-color: #f2f2f2;}
     top: 50%; 
 }
 
-#beginbutton{}
+#beginbutton{
+    
+    position: absolute;
+    left: 5%;
+    background-color: grey; 
+    border: none;
+    color: white;
+    padding: 10px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    width: 90%;
+    
+}
 
-#explanation{}
 
-#list{}
+#exerciseName{
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 3%;
+    
+}
 
+#restTime{
+    
+    position: absolute;
+    width: 50%;
+    text-align: center;
+    left: 0%;
+    top: 8%;
+}
 
+#repRange{
+   
+    position: absolute;
+    width: 50%;
+    text-align: center;
+    left: 50%;
+    top: 8%;
+    
+}
+
+#nextButton, #prevButton, #endButton{
+    
+    position: absolute;
+    top: 13%;
+    background-color: grey; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    width: 40%;
+    
+}
+
+#nextButton, #endButton{
+    left: 55%;
+}
+
+#prevButton{
+    left: 5%
+}
 
 
 
