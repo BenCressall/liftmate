@@ -130,11 +130,11 @@ tr:nth-child(even) {background-color: #f2f2f2;}
     background-color: grey; /* Green */
     border: none;
     color: white;
-    padding: 10px 5px;
+    padding: 2% 5px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 10px;
+    font-size: 12px;
     width: 40%;
     
 }
