@@ -3,7 +3,7 @@ table {
     border-collapse: collapse;
     width: 100%;
     position: absolute;
-    top: 20%
+    top: 25%
 }
 
 table, td,th {
@@ -126,7 +126,7 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 #nextButton, #prevButton, #endButton{
     
     position: absolute;
-    top: 13%;
+    top: 15%;
     background-color: grey; /* Green */
     border: none;
     color: white;
@@ -136,6 +136,7 @@ tr:nth-child(even) {background-color: #f2f2f2;}
     display: inline-block;
     font-size: 12px;
     width: 40%;
+    border-radius: 10%;
     
 }
 
