@@ -1,9 +1,31 @@
 
 
+
+
+
+// Get the previous workout from local storage 
+
+var storageKey = "Workout_" + workoutIndex;
+
+if (typeof(Storage) !== "undefined")
+{
+    var workoutAsJSON = localStorage.getItem(storageKey);
+    
+    if (workoutAsJSON !== null)
+        {
+            workout = JSON.parse(workoutAsJSON)
+        }
+}
+else
+{
+    console.log("localStorage is not supported by current browser.");
+}
+
+
 // Global Varibales
 
-console.log(workout);
 
+// the prevIdvalue object is used as a way of referencing objects in the onblur function as just using the original workout object runs into errors becuse of the loops. The currentIdvalue is used to keep track of any chages that are made.
 var prevIdValues = {},
     currentIdValue = {},
     
@@ -11,11 +33,12 @@ var prevIdValues = {},
     pageVisits = [];
 
 
-
-
-
 var mainNode = document.getElementsByTagName("main")[0];
 
+//Determine the number of exercises to be performed 
+var exerciseNum = exerciseCounter(workout);
+    
+// The begin workout page
 if (exerciseIndex === 0)
         {
             
@@ -28,7 +51,7 @@ if (exerciseIndex === 0)
             var listNode = document.createElement("ol");
             listNode.setAttribute("id", "list");    
             
-            for (i=0; i < workout.exercisesNum; i++)
+            for (i=0; i < exerciseNum; i++)
                 {
                     var exercise = workout[i];
                     var index = i + 1;
@@ -66,6 +89,18 @@ function begin(){
     displayExercise(exerciseIndex);
 };
 
+function exerciseCounter(obj){
+        
+    var count = 0;
+    for(var i in obj)
+        if(obj.hasOwnProperty(i)){
+			count++;
+		}
+    
+    // -3 to just get the number of sets
+    return count - 2;
+    };
+
 function displayExercise(index){
     
     // set these back to an empty object for each exercise so that we dont get an overide effect (not that it would matter)
@@ -91,13 +126,16 @@ function displayExercise(index){
     mainNode.appendChild(repRange);
     
     
-    // make next and previous buttons
-    var nextButton = document.createElement('button');
-        nextButton.setAttribute("id", "nextButton");
-        nextButton.innerHTML = "Next";
-        nextButton.onclick = next;
-            
-        mainNode.appendChild(nextButton);
+    // make next, previous and end buttons
+    if( index < exerciseNum)
+        {
+            var nextButton = document.createElement('button');
+            nextButton.setAttribute("id", "nextButton");
+            nextButton.innerHTML = "Next";
+            nextButton.onclick = next;
+
+            mainNode.appendChild(nextButton);   
+        }
     
     if( index > 1 )
         {
@@ -108,6 +146,16 @@ function displayExercise(index){
             
             mainNode.appendChild(prevButton);   
         }
+    if (index === exerciseNum)
+        {
+            var endButton = document.createElement('button');
+            endButton.setAttribute('id','endButton');
+            endButton.innerHTML = "End Workout";
+            endButton.onclick = endWorkout;
+            
+            mainNode.appendChild(endButton);
+        }
+    
     
     // make table based and assign heading rot 
     var valueTable = document.createElement('table');
@@ -229,6 +277,7 @@ function displayExercise(index){
                             this.style.color = "#CCC";
                             
                         }
+                        
                         // if value has been entered then put this value into global object 'currentIdValues'
                         else
                         {
@@ -334,11 +383,15 @@ function next(){
     
     exportdata(exerciseIndex);
     
+    console.log(workout);
+    
     mainNode.removeChild(exerciseName);
     mainNode.removeChild(restTime);
     mainNode.removeChild(repRange);
     mainNode.removeChild(valueTable);
     mainNode.removeChild(nextButton);
+    
+    // to account for the fist exercise where there is no previous button
     if (exerciseIndex > 1)
         {
             mainNode.removeChild(prevButton);
@@ -347,7 +400,6 @@ function next(){
     pageVisits[exerciseIndex] = 1;  
     exerciseIndex += 1;
     displayExercise(exerciseIndex);
-    console.log(pageVisits);
     
 };
 
@@ -359,8 +411,17 @@ function prev(){
     mainNode.removeChild(restTime);
     mainNode.removeChild(repRange);
     mainNode.removeChild(valueTable);
-    mainNode.removeChild(nextButton);
     mainNode.removeChild(prevButton);
+    
+    // to account for the last exercise where there is no next button
+    if (exerciseIndex < exerciseNum)
+        {
+            mainNode.removeChild(nextButton);   
+        }
+    else
+        {
+            mainNode.removeChild(endButton);
+        }
     
     pageVisits[exerciseIndex] = 1;
     exerciseIndex -= 1;
@@ -398,7 +459,7 @@ function exportdata(index)
             for (j=1; j <= entries; j++)
                 {
                     
-                    
+                    // build the required id and set the workout object to that id value
                     id = i + ":2:" + j;
                     workout[index][i][weightCounter] = Number(currentIdValue[id]);
                     
@@ -415,7 +476,74 @@ function exportdata(index)
 };
 
 
+function endWorkout()
+{
+    
+    // set date to todays workout ( we do it at the end so that the previous date is diplayed throuhgout the workout)
+    var day = new Date().getDate(),
+        month = new Date().getMonth() + 1,
+        year = new Date().getFullYear()
 
+    var date = day + "/" + month + "/" + year;
+    
+    console.log(date);
+    
+    workout.date = date;
+
+    exportdata(exerciseIndex);
+    
+    if (confirm("Save Workout?") === true)
+    {
+    workoutAsJSON = JSON.stringify(workout)
+        
+    // save workout to individual workout key    
+    localStorage.setItem(storageKey,workoutAsJSON);
+    
+    alert("Workout Saved");
+        
+    //save workout to complete key
+    var allWorkoutsAsJSON = localStorage.getItem("Workout_ALL")
+    
+    console.log(allWorkoutsAsJSON)
+        
+    if (allWorkoutsAsJSON !== null)
+        {
+            var allWorkouts = JSON.parse(allWorkoutsAsJSON);
+            
+            allWorkouts.push(workout);
+            
+        }
+    else
+        {
+            allWorkouts = [workout];
+        }
+    
+    allWorkoutsAsJSON = JSON.stringify(allWorkouts)
+        
+    localStorage.setItem("Workout_ALL",allWorkoutsAsJSON);
+         
+    }    
+    
+    location.href = "workouts.html";
+        
+    
+};
+
+function cancelWorkout()
+{
+    if (exerciseIndex > 0)
+        {
+            if (confirm("Are you sure you want to leave workout? All progress will be lost!") === true)
+                {
+                    location.href = "workouts.html";
+                }    
+        }
+    else
+        {
+            location.href = "workouts.html";
+        }
+    
+};
 
 
 
