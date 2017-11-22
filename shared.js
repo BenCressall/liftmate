@@ -513,10 +513,11 @@ function exportdata(index)
                     
                     // build the required id and set the workout object to that id value
                     id = i + ":2:" + j;
-                    workout[index][i][weightCounter] = Number(currentIdValue[id]);
+                    
+                    workout[index][i][weightCounter] = currentIdValue[id];
                     
                     id = i + ":3:" + j;
-                    workout[index][i][repCounter] = Number(currentIdValue[id]);
+                    workout[index][i][repCounter] = currentIdValue[id];
                     
                     weightCounter += 2;
                     repCounter += 2;
