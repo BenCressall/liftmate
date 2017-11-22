@@ -376,6 +376,13 @@ function displayExercise(index){
     
     mainNode.appendChild(valueTable);
     
+    var fillAllButton = document.createElement('button');
+    fillAllButton.setAttribute('id','fillAllButton');
+    fillAllButton.innerHTML = "Fill All";
+    fillAllButton.onclick = fillAll;
+            
+    mainNode.appendChild(fillAllButton);
+    
     
 };
 
@@ -390,6 +397,7 @@ function next(){
     mainNode.removeChild(repRange);
     mainNode.removeChild(valueTable);
     mainNode.removeChild(nextButton);
+    mainNode.removeChild(fillAllButton);
     
     // to account for the fist exercise where there is no previous button
     if (exerciseIndex > 1)
@@ -412,6 +420,7 @@ function prev(){
     mainNode.removeChild(repRange);
     mainNode.removeChild(valueTable);
     mainNode.removeChild(prevButton);
+    mainNode.removeChild(fillAllButton);
     
     // to account for the last exercise where there is no next button
     if (exerciseIndex < exerciseNum)
@@ -428,6 +437,49 @@ function prev(){
     displayExercise(exerciseIndex);
     
 };
+
+function fillAll(){
+    
+    var value = currentIdValue["1:2:1"];
+    console.log(value);
+    
+    var sets = setCounter(workout[exerciseIndex]);
+    
+    // function can be used to find the number of elements in an object
+    function setCounter(obj){
+        
+        var count = 0;
+        for(var i in obj)
+            if(obj.hasOwnProperty(i)){
+                count++;
+            }
+
+        // -3 to just get the number of sets
+        return count - 3;
+    };
+    
+    for(i=1;i<=sets;i++)
+        {
+            entries = workout[exerciseIndex][i].length;
+            entries = (entries - 1)/2; 
+            console.log(entries);
+            console.log(exerciseIndex);
+            
+            for (j=1; j <= entries; j++)
+                {
+                    
+                    // build the required id and set the workout object to that id value
+                    id = i + ":2:" + j;
+                    console.log(id);
+                    document.getElementById(id).value = value;
+                    document.getElementById(id).style.color = "#000";
+                    currentIdValue[id] = value;
+                    
+                }; 
+    
+        }
+};
+
 
 function exportdata(index)
 {

@@ -148,5 +148,20 @@ tr:nth-child(even) {background-color: #f2f2f2;}
     left: 5%
 }
 
-
+#fillAllButton{
+    
+    background-color: grey; 
+    border: none;
+    color: white;
+    padding: 2% 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    width: 80%;
+    position: absolute;
+    bottom: 0%;
+    left: 10%;
+    
+}
 

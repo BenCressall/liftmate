@@ -21,7 +21,7 @@
               <i class="material-icons">arrow_back</i>
             </button>
             <div class="mdl-layout__header-row">
-              <span class="mdl-layout-title" id="headerBarTitle">Back / Biceps</span>
+              <span class="mdl-layout-title" id="headerBarTitle">Legs</span>
               <div class="mdl-layout-spacer"></div>
             </div>
           </header>              
@@ -36,89 +36,90 @@
         
         <script>    
                 
-        var workoutIndex = 2, 
+        var workoutIndex = 3, 
             exerciseIndex = 0,
-            infomessage = 'This workout for Back and Biceps includes the following exercises:'
+            infomessage = 'This workout for Legs and Abs includes the following exercises:'
             
         var workout = {
             
-            workoutName: "Back and Biceps",
+            workoutName: "Legs and Abs",
             
             date: "00/00/0000",
             
-            "1": { name: ["Pull Ups"], 
-                   reps: ["10"],
-                   1: ["Working Set 1",0,0],
-                   2: ["Working Set 2",0,0],
-                   3: ["Working Set 3",0,0],
-                   4: ["Working Set 4",0,0],
-                   rest: ["60"]
+            "1": { name: ["Straight Leg Deadlifts"], 
+                   reps: ["8-12"],
+                   1: ["Warm Up",0,0],
+                   2: ["Working Set 1",0,0],
+                   3: ["Working Set 2",0,0],
+                   4: ["Working Set 3",0,0],
+                   rest: ["90"]
                  }, 
             
-            "2": { name: ["Bent Row"],
+            "2": { name: ["Seated Leg Curl"],
                    reps: ["8 - 12"],
-                   1: ["Working Set 1",0,0],
-                   2: ["Working Set 2",0,0],
-                   3: ["Working Set 3",0,0,0,0],
-                   rest: ["60"]
-                 }, 
-            
-            "3": { name: ["Close Grip Pull Down"],
-                   reps: ["8 - 12"],
-                   1: ["Working Set 1",0,0],
-                   2: ["Working Set 2",0,0],
-                   3: ["Working Set 3",0,0,0,0],
-                   rest: ["60"]
-                 },
-            
-            "4": { name: ["Single Arm DB rows"],
-                   reps: ["8 - 12"],
-                   1: ["Working Set 1",0,0],
-                   2: ["Working Set 2",0,0],
-                   3: ["Working Set 3",0,0],
-                   rest: ["60"]
-                       },
-            
-            "5": { name: ["Straight Arm Rope Lat Pulldown"],
-                   reps: ["15"],
                    1: ["Working Set 1",0,0],
                    2: ["Working Set 2",0,0],
                    3: ["Working Set 3",0,0],
                    4: ["Working Set 4",0,0],
                    5: ["Working Set 5",0,0],
                    rest: ["30"]
-                 },
+                 }, 
             
-            "6": { name: ["BB Bicep Curls"],
-                   reps: ["8 - 12"],
-                   1: ["Working Set 1",0,0],
+            "3": { name: ["Squats"],
+                   reps: ["14-16"],
+                   1: ["Warm Up Set",0,0],
                    2: ["Working Set 2",0,0],
                    3: ["Working Set 3",0,0],
-                   4: ["Working Set 4",0,0],
-                   rest: ["60"]
+                   4: ["Working Set 4",0,0,0,0],
+                   rest: ["90"]
                  },
             
-            "7": { name: ["Incline Bench BB Curl"],
-                   reps: ["8 - 12"],
+            "4": { name: ["leg Press"],
+                   reps: ["10 - 12"],
                    1: ["Working Set 1",0,0],
                    2: ["Working Set 2",0,0],
-                   3: ["Working Set 3",0,0],
-                   4: ["Working Set 4",0,0],
+                   3: ["Working Set 3",0,0,0,0],
                    rest: ["60"]
+                       },
+            
+            "5": { name: ["Leg Extensions", "Jumping Lunges"],
+                   reps: ["10 - 12 / To Failure"],
+                   1: ["warm Up",0,0,0,0],
+                   2: ["Working Set 1",0,0,0,0],
+                   3: ["Working Set 2",0,0,0,0],
+                   4: ["Working Set 3",0,0,0,0],
+                   rest: ["30"]
                  },
             
-            "8": { name: ["Preacher curls","Hammer Curls"],
+            "6": { name: ["Hanging Leg Raises"],
                    reps: ["To Failure"],
                    1: ["Working Set 1",0,0],
                    2: ["Working Set 2",0,0],
+                   3: ["Working Set 3",0,0],
+                   4: ["Working Set 4",0,0],
                    rest: ["60"]
                  },
             
+            "7": { name: ["Wood Choppers"],
+                   reps: ["6 - 15"],
+                   1: ["Working Set 1",0,0,0,0],
+                   2: ["Working Set 2",0,0,0,0],
+                   3: ["Working Set 3",0,0,0,0],
+                   4: ["Working Set 4",0,0,0,0],
+                   rest: ["60"]
+                 },
+            
+            "8": { name: ["Russian Twists","Decline Situps"],
+                   reps: ["To Failure"],
+                   1: ["Working Set 1",0,0,0,0],
+                   2: ["Working Set 2",0,0,0,0],
+                   3: ["Working Set 3",0,0,0,0],
+                   4: ["Working Set 4",0,0,0,0],
+                   rest: ["30"]
+                 },      
             
         };
         
-        
-        // may not need set codes cause we could if length(name) == 2 then classifiy as a superset and if lenght(setx) > 3, then say dropset
            
         </script>
         
